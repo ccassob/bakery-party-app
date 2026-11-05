@@ -1,0 +1,75 @@
+<!-- Day header: back to week, day navigation, new order -->
+<div class="row g-2 mb-3 align-items-center">
+  <div class="col-md-auto">
+    <a class="btn btn-outline-secondary" routerLink="/cake-toppers/orders" [queryParams]="{ week: weekStart() }">
+      <iconify-icon icon="tabler:arrow-left" class="me-1"></iconify-icon>{{ 'orders.backToWeek' | translate }}
+    </a>
+  </div>
+
+  <div class="col-md-auto d-flex align-items-center gap-2">
+    <button class="btn btn-outline-secondary btn-icon" (click)="shiftDay(-1)" [attr.aria-label]="'orders.prevDay' | translate" [title]="'orders.prevDay' | translate">
+      <iconify-icon icon="tabler:chevron-left"></iconify-icon>
+    </button>
+    <button class="btn btn-outline-secondary" (click)="goToDay(today())">{{ 'orders.today' | translate }}</button>
+    <button class="btn btn-outline-secondary btn-icon" (click)="shiftDay(1)" [attr.aria-label]="'orders.nextDay' | translate" [title]="'orders.nextDay' | translate">
+      <iconify-icon icon="tabler:chevron-right"></iconify-icon>
+    </button>
+  </div>
+
+  <div class="col-md-3">
+    <div class="input-group">
+      <span class="input-group-text bg-transparent border-end-0">
+        <iconify-icon icon="tabler:search" class="text-muted"></iconify-icon>
+      </span>
+      <input
+        type="text"
+        class="form-control border-start-0"
+        [placeholder]="'orders.searchPlaceholder' | translate"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+  </div>
+
+  <div class="col-md-auto ms-md-auto">
+    <button class="btn btn-primary" (click)="openNewModal()">
+      <iconify-icon icon="tabler:plus" class="me-1"></iconify-icon>{{ 'orders.newOrder' | translate }}
+    </button>
+  </div>
+</div>
+
+<h5 class="fw-bold text-primary mb-3">
+  <iconify-icon icon="tabler:calendar-event" class="me-1 align-text-bottom"></iconify-icon>{{ title() }}
+  <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-2 fs-12">{{ total() }}</span>
+</h5>
+
+<!-- Status board for this day: drag a card to another column to change its status -->
+<div cdkDropListGroup class="row row-cols-xxl-6 row-cols-xl-3 row-cols-md-2 row-cols-1 g-3">
+  @for (column of columns; track column) {
+  <div class="col">
+    <div class="bg-body-tertiary rounded p-2 h-100">
+
+      <div class="d-flex justify-content-between align-items-center px-1 mb-2">
+        <h6 class="fw-semibold mb-0 {{ columnClass(column) }}">{{ statusKey(column) | translate }}</h6>
+        <span class="badge bg-secondary-subtle text-secondary rounded-pill">{{ byStatus().get(column)!.length }}</span>
+      </div>
+
+      <div
+        cdkDropList
+        class="kanban-list d-flex flex-column gap-2"
+        [cdkDropListData]="column"
+        (cdkDropListDropped)="drop($event)">
+
+        @for (order of byStatus().get(column); track order.id) {
+        <div class="kanban-card" cdkDrag [cdkDragData]="order">
+          <app-order-card [order]="order" (edit)="openEditModal($event)" />
+        </div>
+        } @empty {
+        <p class="text-muted text-center fs-13 py-3 mb-0">{{ 'orders.emptyColumn' | translate }}</p>
+        }
+
+      </div>
+    </div>
+  </div>
+  }
+</div>

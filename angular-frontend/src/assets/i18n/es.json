@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "main": "Principal",
+    "dashboard": "Panel",
+    "cakeToppers": "Cake Toppers",
+    "orders": "Pedidos"
+  },
+  "user": {
+    "welcome": "¡Bienvenido de nuevo!",
+    "profile": "Perfil",
+    "accountSettings": "Configuración de cuenta",
+    "lockScreen": "Bloquear pantalla",
+    "logout": "Cerrar sesión"
+  },
+  "orders": {
+    "searchPlaceholder": "Buscar cliente o descripción...",
+    "today": "Hoy",
+    "prevWeek": "Semana anterior",
+    "nextWeek": "Semana siguiente",
+    "prevDay": "Día anterior",
+    "nextDay": "Día siguiente",
+    "backToWeek": "Semana",
+    "openDay": "Ver el día",
+    "outsideWeek": "pedido(s) fuera de esta semana",
+    "emptyDay": "Sin pedidos",
+    "ordersFound": "pedido(s) encontrado(s)",
+    "newOrder": "Nuevo pedido",
+    "created": "Creado",
+    "deliveryDate": "Entrega",
+    "price": "Precio",
+    "delivery": "Delivery",
+    "noDelivery": "Sin delivery",
+    "paid": "Pagado",
+    "creditDue": "Crédito vence el",
+    "pendingPayment": "Pago pendiente",
+    "edit": "Editar",
+    "emptyColumn": "Sin pedidos aquí"
+  },
+  "status": {
+    "Por_Hacer": "Por Hacer",
+    "En_Progreso": "En Progreso",
+    "Entregado": "Entregado",
+    "Pagado": "Pagado",
+    "A_Credito": "A Crédito",
+    "Completado": "Completado",
+    "Expirado": "Expirado"
+  },
+  "modal": {
+    "newOrder": "Nuevo Pedido",
+    "clientName": "Nombre del Cliente",
+    "description": "Descripción",
+    "descriptionPlaceholder": "ej. Unicornio pastel con el nombre Valeria y estrellas",
+    "createdAt": "Fecha de Creación",
+    "deliveryDate": "Fecha de Entrega",
+    "orderStatus": "Estado del Pedido",
+    "price": "Precio",
+    "hasDelivery": "Incluye delivery",
+    "deliveryCost": "Costo de delivery",
+    "payment": "Pago",
+    "isPaid": "Ya está pagado",
+    "isCredit": "Pago a crédito",
+    "creditExpiration": "Fecha de expiración del crédito",
+    "confirm": "Crear Pedido",
+    "cancel": "Cancelar",
+    "yes": "Sí",
+    "no": "No",
+    "editOrder": "Editar Pedido",
+    "saveChanges": "Guardar Cambios"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "recentOrders": "Pedidos recientes",
+    "viewAll": "Ver todos",
+    "upcomingEvents": "Próximos eventos",
+    "order": "Pedido",
+    "customer": "Cliente",
+    "item": "Producto",
+    "status": "Estado",
+    "date": "Fecha",
+    "guests": "invitados"
+  }
+}

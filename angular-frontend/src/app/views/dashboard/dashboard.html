@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row mt-3">
+    <div class="col-12">
+      <h4 class="page-title">{{ 'dashboard.title' | translate }}</h4>
+    </div>
+  </div>
+
+  <!-- Stat cards -->
+  <div class="row row-cols-xl-4 row-cols-md-2 row-cols-1 g-3 mb-3">
+    @for (stat of stats; track stat.label) {
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body d-flex align-items-center gap-3">
+          <div class="avatar-md bg-primary-subtle rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+            <iconify-icon [icon]="'tabler:' + stat.icon" class="fs-28 text-primary"></iconify-icon>
+          </div>
+          <div>
+            <p class="text-muted mb-1 fs-13">{{ stat.label }}</p>
+            <h4 class="mb-1">{{ stat.value }}</h4>
+            <p class="mb-0 fs-12" [class]="stat.up ? 'text-success' : 'text-danger'">{{ stat.change }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="row g-3">
+    <!-- Recent orders -->
+    <div class="col-xl-7">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">{{ 'dashboard.recentOrders' | translate }}</h5>
+          <a routerLink="/cake-toppers/orders" class="btn btn-sm btn-outline-primary">{{ 'dashboard.viewAll' | translate }}</a>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>{{ 'dashboard.order' | translate }}</th>
+                  <th>{{ 'dashboard.customer' | translate }}</th>
+                  <th>{{ 'dashboard.item' | translate }}</th>
+                  <th>{{ 'dashboard.status' | translate }}</th>
+                  <th>{{ 'dashboard.date' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (order of recentOrders; track order.id) {
+                <tr>
+                  <td class="fw-semibold">{{ order.id }}</td>
+                  <td>{{ order.customer }}</td>
+                  <td>{{ order.item }}</td>
+                  <td>
+                    <span class="badge rounded-pill {{ statusClass(order.status) }}">{{ order.status }}</span>
+                  </td>
+                  <td class="text-muted">{{ order.date }}</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming events -->
+    <div class="col-xl-5">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">{{ 'dashboard.upcomingEvents' | translate }}</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-column gap-3">
+            @for (event of upcomingEvents; track event.name) {
+            <div class="d-flex gap-3 align-items-start border-bottom pb-3">
+              <div class="avatar-sm bg-primary-subtle rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                <iconify-icon icon="tabler:calendar-event" class="fs-20 text-primary"></iconify-icon>
+              </div>
+              <div>
+                <p class="fw-semibold mb-1">{{ event.name }}</p>
+                <p class="text-muted mb-1 fs-13">
+                  <iconify-icon icon="tabler:calendar" class="me-1"></iconify-icon>{{ event.date }}
+                  &nbsp;·&nbsp;
+                  <iconify-icon icon="tabler:users" class="me-1"></iconify-icon>{{ event.guests }} {{ 'dashboard.guests' | translate }}
+                </p>
+                <p class="text-muted mb-0 fs-12">{{ event.notes }}</p>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

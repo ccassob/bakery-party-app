@@ -1,0 +1,76 @@
+<!-- Search + week navigation + new order -->
+<div class="row g-2 mb-3 align-items-center">
+  <div class="col-md-3">
+    <div class="input-group">
+      <span class="input-group-text bg-transparent border-end-0">
+        <iconify-icon icon="tabler:search" class="text-muted"></iconify-icon>
+      </span>
+      <input
+        type="text"
+        class="form-control border-start-0"
+        [placeholder]="'orders.searchPlaceholder' | translate"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+  </div>
+
+  <div class="col-md-auto d-flex align-items-center gap-2">
+    <button class="btn btn-outline-secondary btn-icon" (click)="shiftWeek(-1)" [attr.aria-label]="'orders.prevWeek' | translate" [title]="'orders.prevWeek' | translate">
+      <iconify-icon icon="tabler:chevron-left"></iconify-icon>
+    </button>
+    <button class="btn btn-outline-secondary" (click)="goToWeek(today)">{{ 'orders.today' | translate }}</button>
+    <button class="btn btn-outline-secondary btn-icon" (click)="shiftWeek(1)" [attr.aria-label]="'orders.nextWeek' | translate" [title]="'orders.nextWeek' | translate">
+      <iconify-icon icon="tabler:chevron-right"></iconify-icon>
+    </button>
+    <span class="fw-semibold ms-1">{{ rangeLabel() }}</span>
+  </div>
+
+  <div class="col-md-auto ms-md-auto">
+    <button class="btn btn-primary" (click)="openNewModal()">
+      <iconify-icon icon="tabler:plus" class="me-1"></iconify-icon>{{ 'orders.newOrder' | translate }}
+    </button>
+  </div>
+</div>
+
+@if (outsideWeek() > 0) {
+<p class="text-muted fs-13 mb-2">{{ outsideWeek() }} {{ 'orders.outsideWeek' | translate }}</p>
+}
+
+<!-- Week calendar: drag a card to another day to change its delivery date -->
+<div cdkDropListGroup class="week-grid">
+  @for (day of days(); track day.iso) {
+  <div class="bg-body-tertiary rounded p-2" [class.day-today]="day.isToday">
+
+    <a class="day-link d-flex justify-content-between align-items-center rounded px-3 py-2 mb-2 text-decoration-none"
+       [class.day-link-today]="day.isToday"
+       [routerLink]="['/cake-toppers/orders/day', day.iso]"
+       [title]="'orders.openDay' | translate">
+      <span class="d-flex align-items-baseline gap-2">
+        <span class="day-number fw-bold lh-1">{{ day.dayNumber }}</span>
+        <span class="text-uppercase fs-13 fw-semibold">{{ day.weekday }}</span>
+      </span>
+      <span class="d-flex align-items-center gap-2">
+        <span class="badge day-count rounded-pill">{{ day.orders.length }}</span>
+        <iconify-icon icon="tabler:chevron-right" class="fs-18"></iconify-icon>
+      </span>
+    </a>
+
+    <div
+      cdkDropList
+      class="day-list d-flex flex-column gap-2"
+      [cdkDropListData]="day.iso"
+      (cdkDropListDropped)="drop($event)">
+
+      @for (order of day.orders; track order.id) {
+      <div class="day-card" cdkDrag [cdkDragData]="order" (cdkDragStarted)="onDragStarted()" (cdkDragEnded)="onDragEnded()">
+        <app-order-card [order]="order" [compact]="true" (edit)="openEditModal($event)" />
+      </div>
+      } @empty {
+      <p class="text-muted text-center fs-13 py-3 mb-0">{{ 'orders.emptyDay' | translate }}</p>
+      }
+
+    </div>
+  </div>
+  }
+</div>

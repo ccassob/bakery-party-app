@@ -1,0 +1,23 @@
+# Dependencias y builds
+node_modules/
+dist/
+.angular/
+bin/
+obj/
+*.user
+.vs/
+
+# Secretos y configuración local (NUNCA subir)
+.env
+.env.*
+secrets.json
+appsettings.Local.json
+appsettings.*.local.json
+.claude/settings.local.json
+
+# Artefactos de herramientas
+.playwright-mcp/
+*.log
+
+# Copia de referencia de la plantilla Inspinia (licencia de pago; no redistribuir)
+boilerplate-template/

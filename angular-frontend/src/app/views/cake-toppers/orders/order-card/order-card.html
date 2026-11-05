@@ -1,0 +1,79 @@
+<div class="card mb-0">
+  @if (compact()) {
+  <div class="card-body p-2" role="button" tabindex="0" (click)="edit.emit(order())" (keydown.enter)="edit.emit(order())">
+    <h6 class="fw-semibold mb-1">{{ order().clientName }}</h6>
+    <p class="fs-13 mb-0">{{ order().description }}</p>
+  </div>
+  } @else {
+  <div class="card-body p-3">
+
+    <!-- Delivery date (main date) + expired badge -->
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <div>
+        <p class="text-muted fs-11 text-uppercase mb-0">{{ 'orders.deliveryDate' | translate }}</p>
+        <p class="fw-bold fs-20 lh-sm text-primary mb-0">
+          <iconify-icon icon="tabler:calendar-event" class="me-1 align-text-bottom"></iconify-icon>{{ formatDate(order().deliveryDate) }}
+        </p>
+      </div>
+      @if (effectiveStatus(order()) === 'Expirado') {
+      <span class="badge rounded-pill bg-danger-subtle text-danger ms-2 flex-shrink-0 fs-11">
+        {{ 'status.Expirado' | translate }}
+      </span>
+      }
+    </div>
+
+    <!-- Client + creation date -->
+    <div class="mb-2">
+      <h6 class="fw-semibold mb-0">{{ order().clientName }}</h6>
+      <p class="text-muted fs-12 mb-0">{{ 'orders.created' | translate }}: {{ formatDate(order().createdAt) }}</p>
+    </div>
+
+    <!-- Details -->
+    <div class="d-flex flex-column gap-2 fs-13">
+
+      <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="tabler:cake" class="text-muted fs-16 flex-shrink-0"></iconify-icon>
+        <span class="fw-semibold">{{ order().description }}</span>
+      </div>
+
+      @if (order().price != null) {
+      <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="tabler:currency-dollar" class="text-muted fs-16 flex-shrink-0"></iconify-icon>
+        <span><span class="text-muted">{{ 'orders.price' | translate }}:</span> <span class="fw-semibold"> ${{ order().price!.toFixed(2) }}</span></span>
+      </div>
+      }
+
+      <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="tabler:truck-delivery" class="text-muted fs-16 flex-shrink-0"></iconify-icon>
+        @if (order().hasDelivery) {
+          <span><span class="text-muted">{{ 'orders.delivery' | translate }}:</span> $<span class="fw-semibold">{{ order().deliveryCost?.toFixed(2) }}</span></span>
+        } @else {
+          <span class="text-muted">{{ 'orders.noDelivery' | translate }}</span>
+        }
+      </div>
+
+      <!-- Payment row -->
+      <div class="d-flex align-items-center gap-2">
+        <iconify-icon icon="tabler:credit-card" class="text-muted fs-16 flex-shrink-0"></iconify-icon>
+        @if (order().isPaid) {
+          <span class="badge bg-success-subtle text-success">
+            <iconify-icon icon="tabler:check" class="me-1"></iconify-icon>{{ 'orders.paid' | translate }}
+          </span>
+        } @else if (order().isCredit) {
+          <span class="badge {{ effectiveStatus(order()) === 'Expirado' ? 'bg-danger-subtle text-danger' : 'bg-warning-subtle text-warning' }}">
+            <iconify-icon icon="tabler:calendar-due" class="me-1"></iconify-icon>
+            {{ 'orders.creditDue' | translate }}@if (order().creditExpiration) { {{ formatDate(order().creditExpiration!) }}}
+          </span>
+        } @else {
+          <span class="text-muted fs-12">{{ 'orders.pendingPayment' | translate }}</span>
+        }
+      </div>
+
+    </div>
+
+    <button class="btn btn-sm btn-outline-secondary mt-3" (click)="edit.emit(order())">
+      <iconify-icon icon="tabler:pencil" class="me-1"></iconify-icon>{{ 'orders.edit' | translate }}
+    </button>
+  </div>
+  }
+</div>

@@ -1,0 +1,128 @@
+<div class="modal-header">
+  <h5 class="modal-title d-flex align-items-center gap-2">
+    <iconify-icon [attr.icon]="isEdit ? 'tabler:pencil' : 'tabler:plus'" class="text-primary fs-20"></iconify-icon>
+    {{ (isEdit ? 'modal.editOrder' : 'modal.newOrder') | translate }}
+  </h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="row g-3">
+
+    <!-- Client name -->
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">
+        {{ 'modal.clientName' | translate }} <span class="text-danger">*</span>
+      </label>
+      <input type="text" class="form-control" [(ngModel)]="clientName" name="clientName" />
+    </div>
+
+    <!-- Description -->
+    <div class="col-12">
+      <label class="form-label fw-semibold fs-13">
+        {{ 'modal.description' | translate }} <span class="text-danger">*</span>
+      </label>
+      <textarea class="form-control" rows="3" maxlength="1000" [(ngModel)]="description" name="description"
+                [placeholder]="'modal.descriptionPlaceholder' | translate"></textarea>
+    </div>
+
+    <!-- Creation date (read-only, existing orders only) -->
+    @if (isEdit) {
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">{{ 'modal.createdAt' | translate }}</label>
+      <input type="date" class="form-control bg-light" [value]="createdAt" disabled />
+    </div>
+    }
+
+    <!-- Delivery date (required, editable) -->
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">
+        {{ 'modal.deliveryDate' | translate }} <span class="text-danger">*</span>
+      </label>
+      <input type="date" class="form-control" [(ngModel)]="deliveryDate" name="deliveryDate" required />
+    </div>
+
+    <!-- Status (editable dropdown) -->
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">{{ 'modal.orderStatus' | translate }}</label>
+      <select class="form-select" [(ngModel)]="status" name="status">
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ statusKey(s) | translate }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Price -->
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">{{ 'modal.price' | translate }}</label>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="number" class="form-control" [(ngModel)]="price" name="price" min="0" step="0.01" />
+      </div>
+    </div>
+
+    <!-- Delivery -->
+    <div class="col-md-6">
+      <label class="form-label fw-semibold fs-13">{{ 'modal.hasDelivery' | translate }}</label>
+      <div class="form-check form-switch mt-1">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="hasDelivery" name="hasDelivery" id="editHasDelivery" />
+        <label class="form-check-label fs-13" for="editHasDelivery">
+          {{ hasDelivery ? ('modal.yes' | translate) : ('modal.no' | translate) }}
+        </label>
+      </div>
+      @if (hasDelivery) {
+      <div class="input-group mt-2">
+        <span class="input-group-text">$</span>
+        <input type="number" class="form-control form-control-sm"
+               [placeholder]="'modal.deliveryCost' | translate"
+               [(ngModel)]="deliveryCost" name="deliveryCost" min="0" step="0.01" />
+      </div>
+      }
+    </div>
+
+    <!-- Payment -->
+    <div class="col-12">
+      <hr class="my-1" />
+      <p class="fw-semibold fs-13 mb-2">{{ 'modal.payment' | translate }}</p>
+      <div class="row g-2">
+
+        <div class="col-md-4">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="isPaid" name="isPaid" id="editIsPaid"
+                   (ngModelChange)="isPaid ? (isCredit = false) : null" />
+            <label class="form-check-label fs-13" for="editIsPaid">{{ 'modal.isPaid' | translate }}</label>
+          </div>
+        </div>
+
+        @if (!isPaid) {
+        <div class="col-md-4">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="isCredit" name="isCredit" id="editIsCredit" />
+            <label class="form-check-label fs-13" for="editIsCredit">{{ 'modal.isCredit' | translate }}</label>
+          </div>
+        </div>
+        }
+
+        @if (!isPaid && isCredit) {
+        <div class="col-md-4">
+          <input type="date" class="form-control form-control-sm"
+                 [placeholder]="'modal.creditExpiration' | translate"
+                 [(ngModel)]="creditExpiration" name="creditExpiration" />
+        </div>
+        }
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">
+    {{ 'modal.cancel' | translate }}
+  </button>
+  <button type="button" class="btn btn-primary" [disabled]="!isValid" (click)="confirm()">
+    <iconify-icon icon="tabler:check" class="me-1"></iconify-icon>
+    {{ (isEdit ? 'modal.saveChanges' : 'modal.confirm') | translate }}
+  </button>
+</div>

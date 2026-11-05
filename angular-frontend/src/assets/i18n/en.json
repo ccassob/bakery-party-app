@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "main": "Main",
+    "dashboard": "Dashboard",
+    "cakeToppers": "Cake Toppers",
+    "orders": "Orders"
+  },
+  "user": {
+    "welcome": "Welcome back!",
+    "profile": "Profile",
+    "accountSettings": "Account Settings",
+    "lockScreen": "Lock Screen",
+    "logout": "Log Out"
+  },
+  "orders": {
+    "searchPlaceholder": "Search client or description...",
+    "today": "Today",
+    "prevWeek": "Previous week",
+    "nextWeek": "Next week",
+    "prevDay": "Previous day",
+    "nextDay": "Next day",
+    "backToWeek": "Week",
+    "openDay": "Open day",
+    "outsideWeek": "order(s) outside this week",
+    "emptyDay": "No orders",
+    "ordersFound": "order(s) found",
+    "newOrder": "New order",
+    "created": "Created",
+    "deliveryDate": "Due",
+    "price": "Price",
+    "delivery": "Delivery",
+    "noDelivery": "No delivery",
+    "paid": "Paid",
+    "creditDue": "Credit due",
+    "pendingPayment": "Payment pending",
+    "edit": "Edit",
+    "emptyColumn": "No orders here"
+  },
+  "status": {
+    "Por_Hacer": "To-Do",
+    "En_Progreso": "In Progress",
+    "Entregado": "Delivered",
+    "Pagado": "Paid",
+    "A_Credito": "Credit",
+    "Completado": "Completed",
+    "Expirado": "Expired"
+  },
+  "modal": {
+    "newOrder": "New Order",
+    "clientName": "Client Name",
+    "description": "Description",
+    "descriptionPlaceholder": "e.g. Pastel unicorn with the name Valeria and stars",
+    "createdAt": "Creation Date",
+    "deliveryDate": "Delivery Date",
+    "orderStatus": "Order Status",
+    "price": "Price",
+    "hasDelivery": "Includes delivery",
+    "deliveryCost": "Delivery cost",
+    "payment": "Payment",
+    "isPaid": "Already paid",
+    "isCredit": "Credit payment",
+    "creditExpiration": "Credit expiration date",
+    "confirm": "Create Order",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "editOrder": "Edit Order",
+    "saveChanges": "Save Changes"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "recentOrders": "Recent Orders",
+    "viewAll": "View All",
+    "upcomingEvents": "Upcoming Events",
+    "order": "Order",
+    "customer": "Customer",
+    "item": "Item",
+    "status": "Status",
+    "date": "Date",
+    "guests": "guests"
+  }
+}
